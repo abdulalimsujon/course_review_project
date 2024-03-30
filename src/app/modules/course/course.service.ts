@@ -3,6 +3,13 @@ import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
 const createCourseIntoDb = async (payload: TCourse) => {
+  const isExistCourse = await Course.findOne({
+    instructor: payload.instructor,
+  });
+  if (isExistCourse) {
+    throw new Error('agfdskj');
+  }
+
   const result = await Course.create(payload);
 
   return result;
@@ -49,7 +56,6 @@ const getCoursesFromDb = async (query: Record<string, unknown>) => {
   if (query?.limit) {
     limit = query.limit as number;
     skip = (page - 1) * limit;
-    console.log('fdjh', skip);
   }
 
   if (query?.page) {
@@ -100,27 +106,23 @@ const updateStudentFromDb = async (id: string, payload: Partial<TCourse>) => {
 };
 
 const getCourseById = async (id: string) => {
-  try {
-    const result = await Course.aggregate([
-      {
-        $match: {
-          _id: new Types.ObjectId(id), // Match condition for _id
-        },
+  const result = await Course.aggregate([
+    {
+      $match: {
+        _id: new Types.ObjectId(id), // Match condition for _id
       },
-      {
-        $lookup: {
-          from: 'reviews', // Name of the collection to join
-          localField: '_id', // Field from the Course collection
-          foreignField: 'courseId', // Field from the Review collection
-          as: 'reviews', // Name of the field to store the joined documents
-        },
+    },
+    {
+      $lookup: {
+        from: 'reviews', // Name of the collection to join
+        localField: '_id', // Field from the Course collection
+        foreignField: 'courseId', // Field from the Review collection
+        as: 'reviews', // Name of the field to store the joined documents
       },
-    ]);
-    return result; // Assuming there's only one result, return the first element
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  }
+    },
+  ]);
+
+  return result; // Assuming there's only one result, return the first element
 };
 const bestCourseAccordingToReview = async () => {
   const result = await Course.find({});

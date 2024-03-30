@@ -13,13 +13,11 @@ const errorHandler = (
   const statusCode = 500;
   const msg = error.message || 'something went wrong';
 
-  res.json(statusCode).json({
+  return res.status(statusCode).json({
     success: false,
     message: msg,
     error: error.message,
   });
-
-  return res;
 };
 
 export default errorHandler;

@@ -8,7 +8,11 @@ import httpStatus from 'http-status';
 const courseSchema = new Schema<TCourse>(
   {
     title: String,
-    instructor: String,
+    instructor: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     categoryId: {
       type: Schema.Types.ObjectId,
       ref: 'Review',

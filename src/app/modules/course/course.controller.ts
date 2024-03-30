@@ -2,19 +2,24 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utilities/catchAsync';
 import sendResponse from '../../utilities/sendResponse';
 import { courseService } from './course.service';
+import { RequestHandler } from 'express';
 
-const CreateCourse = catchAsync(async (req, res) => {
-  const body = req.body;
+const CreateCourse: RequestHandler = async (req, res, next) => {
+  try {
+    const body = req.body;
 
-  const result = await courseService.createCourseIntoDb(body);
+    const result = await courseService.createCourseIntoDb(body);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Course successfully created',
-    data: result,
-  });
-});
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Course successfully created',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 const getCourses = catchAsync(async (req, res) => {
   const query = req.query;
 
