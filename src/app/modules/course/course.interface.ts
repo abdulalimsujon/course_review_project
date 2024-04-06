@@ -19,4 +19,5 @@ export type TCourse = {
   language: string;
   provider: string;
   details: TcourseDetails;
+  createdBy: Types.ObjectId;
 };

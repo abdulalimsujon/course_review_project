@@ -3,6 +3,7 @@ import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
 const createCourseIntoDb = async (payload: TCourse) => {
+  console.log(payload);
   const isExistCourse = await Course.findOne({
     instructor: payload.instructor,
   });

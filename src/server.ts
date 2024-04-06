@@ -27,3 +27,8 @@ process.on('unhandledRejection', () => {
 
   process.exit(1);
 });
+
+process.on('uncaughtException', () => {
+  console.log('uncauhght exection is detected');
+  process.exit(1);
+});

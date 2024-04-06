@@ -21,6 +21,7 @@ const CreateCourseValidation = z.object({
     language: z.string(),
     provider: z.string(),
     details: courseDetails,
+    createdBy: z.string(),
   }),
 });
 

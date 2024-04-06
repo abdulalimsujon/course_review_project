@@ -21,6 +21,10 @@ const CategorySchema = new Schema<TCategory>(
       type: Boolean,
       default: false,
     },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     versionKey: false,

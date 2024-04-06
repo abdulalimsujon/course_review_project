@@ -9,6 +9,10 @@ const reviewSchema = new Schema<TcourseReview>(
     },
     rating: Number,
     review: String,
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {},
 );
